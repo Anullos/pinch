@@ -39,4 +39,7 @@ package. Although you are free to choose your own packages, at least use the fol
 
 #### Notes
 
-progress...
+Need use the generator with 
+```
+flutter packages pub run build_runner build
+```
