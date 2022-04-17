@@ -54,7 +54,9 @@ class _ItemSimilarGameState extends State<ItemSimilarGame> {
                         onTap: _flip,
                         child: widget.gameLite.cover != null
                             ? CustomImagenetwork(
-                                url: widget.gameLite.cover!.url)
+                                url: widget.gameLite.cover!.url,
+                                color: PinchColors.lightPrimary,
+                              )
                             : Container(
                                 color: PinchColors.primary,
                                 padding: const EdgeInsets.all(16.0),
