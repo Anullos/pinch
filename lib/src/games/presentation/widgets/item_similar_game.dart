@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../shared/presentation/utils/pinch_colors.dart';
 import '../../../shared/presentation/utils/pinch_images.dart';
 import '../../domain/models/game_lite_model.dart';
+import 'custom_image_network.dart';
 
 class ItemSimilarGame extends StatefulWidget {
   const ItemSimilarGame({Key? key, required this.gameLite}) : super(key: key);
@@ -52,10 +53,8 @@ class _ItemSimilarGameState extends State<ItemSimilarGame> {
                       GestureDetector(
                         onTap: _flip,
                         child: widget.gameLite.cover != null
-                            ? Image.network(
-                                widget.gameLite.cover!.url,
-                                fit: BoxFit.fill,
-                              )
+                            ? CustomImagenetwork(
+                                url: widget.gameLite.cover!.url)
                             : Container(
                                 color: PinchColors.primary,
                                 padding: const EdgeInsets.all(16.0),

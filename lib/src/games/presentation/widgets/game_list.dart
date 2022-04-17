@@ -28,12 +28,22 @@ class GameList extends StatelessWidget {
     }, builder: (_, stateGames) {
       return stateGames.gamesList.isEmpty &&
               !stateGames.gamesFailureOrSuccess.isLoading
-          ? Container(
-              height: 300,
-              alignment: Alignment.center,
-              child: Text(
-                S.of(context).thereNotGames,
-                style: Theme.of(context).textTheme.headline6,
+          ? RefreshIndicator(
+              onRefresh: () async {
+                await context.read<GamesCubit>().getGames();
+              },
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  Container(
+                    height: 300,
+                    alignment: Alignment.center,
+                    child: Text(
+                      S.of(context).thereNotGames,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                ],
               ),
             )
           : ListView.builder(

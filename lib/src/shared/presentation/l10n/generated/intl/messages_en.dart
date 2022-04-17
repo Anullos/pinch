@@ -44,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "listGames": MessageLookupByLibrary.simpleMessage("List of games"),
         "mainGame": MessageLookupByLibrary.simpleMessage("Main game"),
         "mod": MessageLookupByLibrary.simpleMessage("Mod"),
+        "notConnectedInternet": MessageLookupByLibrary.simpleMessage(
+            "Not connected to the internet"),
         "offline": MessageLookupByLibrary.simpleMessage("Offline"),
         "port": MessageLookupByLibrary.simpleMessage("Port"),
         "released": MessageLookupByLibrary.simpleMessage("Released"),

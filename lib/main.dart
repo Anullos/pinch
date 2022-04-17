@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,25 +15,47 @@ import 'src/games/infrastructure/remote_games_repository_implements.dart';
 import 'src/network/application/network_cubit.dart';
 import 'src/network/domain/types/connection_type.dart';
 import 'src/shared/config/cubits_logger.dart';
+import 'src/shared/database/database.dart';
 import 'src/shared/infrastructure/providers.dart';
 import 'src/shared/presentation/l10n/generated/l10n.dart';
 import 'routes.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final callback = Callback(
+    onCreate: (database, version) {
+      debugPrint('Database created');
+    },
+    onOpen: (database) {
+      debugPrint('Database open');
+    },
+    onUpgrade: (database, startVersion, endVersion) {
+      debugPrint('Database upgrade');
+    },
+  );
+  final database = await $FloorAppDatabase
+      .databaseBuilder(
+        'pinch_database2.db',
+      )
+      .addCallback(callback)
+      .build();
   BlocOverrides.runZoned(
     () {
       AuthCubit;
       NetworkCubit;
       GamesCubit;
       GameDetailCubit;
-      runApp(const MyApp());
+      runApp(MyApp(
+        database: database,
+      ));
     },
     blocObserver: CubitsLogger(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.database}) : super(key: key);
+  final AppDatabase database;
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +80,8 @@ class MyApp extends StatelessWidget {
             BlocBuilder<NetworkCubit, NetworkState>(builder: (_, stateNetwork) {
           return RepositoryProvider<GamesRepositoryInterface>(
             create: (_) => (stateNetwork.connectionType is ConnectionTypeNone)
-                ? LocalGamesRepositoryImplements()
-                : RemoteGamesRepositoryImplements(dioInstanceClient),
+                ? LocalGamesRepositoryImplements(database)
+                : RemoteGamesRepositoryImplements(dioInstanceClient, database),
             child: BlocProvider<GamesCubit>(
               create: (context) => GamesCubit(
                 gamesRepository: context.read<GamesRepositoryInterface>(),

@@ -5,6 +5,7 @@ import '../../../shared/presentation/utils/pinch_colors.dart';
 import '../../../shared/presentation/utils/pinch_images.dart';
 import '../../domain/models/game_lite_model.dart';
 import '../extensions/game_category_type_extension.dart';
+import 'custom_image_network.dart';
 
 class GameDetailsHeader extends StatelessWidget {
   const GameDetailsHeader({Key? key, required this.gameLite}) : super(key: key);
@@ -29,10 +30,7 @@ class GameDetailsHeader extends StatelessWidget {
                       PinchImages.pinchLogo,
                       width: 100,
                     )
-                  : Image.network(
-                      gameLite.cover!.url,
-                      fit: BoxFit.fill,
-                    ),
+                  : CustomImagenetwork(url: gameLite.cover!.url),
             ),
           ),
           Expanded(

@@ -19,6 +19,7 @@ dependencies:
   #plus
   connectivity_plus: ^2.3.0
   url_launcher: ^6.0.20
+  cached_network_image_builder: ^0.2.0
 
 dev_dependencies:
   flutter_test:

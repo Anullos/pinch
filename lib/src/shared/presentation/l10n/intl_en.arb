@@ -29,5 +29,6 @@
   "screenshots": "Screenshots",
   "similarGames": "Similar games",
   "goToPage": "Go to page",
-  "cantToLauncher": "Can't launch the game page"
+  "cantToLauncher": "Can't launch the game page",
+  "notConnectedInternet": "Not connected to the internet"
 }

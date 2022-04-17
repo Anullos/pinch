@@ -359,6 +359,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Not connected to the internet`
+  String get notConnectedInternet {
+    return Intl.message(
+      'Not connected to the internet',
+      name: 'notConnectedInternet',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

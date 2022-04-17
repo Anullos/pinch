@@ -1,3 +1,5 @@
+import '../entities/cover_entity.dart';
+
 class CoverModel {
   final int id;
   final String url;
@@ -15,6 +17,11 @@ class CoverModel {
       url: url ?? this.url,
     );
   }
+
+  CoverEntity toCoverEntity() => CoverEntity(
+        id: id,
+        url: url,
+      );
 
   @override
   String toString() => 'CoverModel(id: $id, url: $url)';

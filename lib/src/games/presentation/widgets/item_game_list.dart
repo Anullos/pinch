@@ -5,6 +5,7 @@ import '../../../shared/presentation/utils/pinch_images.dart';
 import '../../domain/models/game_lite_model.dart';
 import '../extensions/game_category_type_extension.dart';
 import '../extensions/game_status_type_extension.dart';
+import 'custom_image_network.dart';
 
 class ItemGameList extends StatelessWidget {
   const ItemGameList(
@@ -50,10 +51,7 @@ class ItemGameList extends StatelessWidget {
                     )
                   : Hero(
                       tag: 'game_picture_${game.id}',
-                      child: Image.network(
-                        game.cover!.url,
-                        fit: BoxFit.fill,
-                      ),
+                      child: CustomImagenetwork(url: game.cover!.url),
                     ),
               Container(
                 height: 250,

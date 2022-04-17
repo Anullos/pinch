@@ -1,3 +1,4 @@
+import '../entities/game_entity.dart';
 import '../types/game_category_type.dart';
 import '../types/game_status_type.dart';
 import 'cover_model.dart';
@@ -35,6 +36,18 @@ class GameLiteModel {
       status: status ?? this.status,
     );
   }
+
+  GameEntity toGameEntity() => GameEntity(
+        id: id,
+        name: name,
+        summary: summary,
+        cover: cover != null ? cover!.id : null,
+        category: category.toString(),
+        status: status.toString(),
+        url: '',
+        screenshots: null,
+        similarGames: null,
+      );
 
   @override
   String toString() {
