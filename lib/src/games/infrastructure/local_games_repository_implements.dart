@@ -32,6 +32,20 @@ class LocalGamesRepositoryImplements extends GamesRepositoryInterface {
 
   @override
   Future<Resource<PinchFailure, GameModel>> getGameDetail(int gameId) async {
-    return Resource.failure(PinchFailure.serverError());
+    try {
+      final game = await _database.gameDao.findGameById(gameId);
+
+      if (game != null) {
+        final result =
+            await game.toGame(_database.coverDao, _database.screenshotDao, _database.gameDao);
+
+        return Resource.success(result);
+      } else {
+        return Resource.failure(PinchFailure.serverError());
+      }
+    } catch (e, f) {
+      log('Database error: $e, $f');
+      return Resource.failure(PinchFailure.serverError());
+    }
   }
 }

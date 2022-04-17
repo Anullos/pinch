@@ -37,21 +37,7 @@ class RemoteGamesRepositoryImplements extends GamesRepositoryInterface {
           .toList();
 
       // * Insert all games in database
-      try {
-        final coversTemp = gamesLite.where((x) => x.cover != null).toList();
-        coversTemp.map((e) async {
-          try {
-            await _database.coverDao.insertCover(e.cover!.toCoverEntity());
-          } catch (_) {}
-          e.cover!.toCoverEntity();
-        }).toList();
-        gamesLite.map((e) async {
-          try {
-            await _database.gameDao.insertGame(e.toGameEntity());
-          } catch (_) {}
-          e.toGameEntity();
-        }).toList();
-      } catch (__, _) {}
+      await insertGamesInDatabase(gamesLite);
 
       return Resource.success(gamesLite);
     } on DioError catch (_) {
@@ -92,45 +78,8 @@ class RemoteGamesRepositoryImplements extends GamesRepositoryInterface {
           .toList()
           .first;
 
-      // * Insert all games in database
-      try {
-        String screenshots = '';
-        String similarGames = '';
-
-        if (game.screenshots != null) {
-          screenshots = game.screenshots!.map((e) => e.id.toString()).join(',');
-          game.screenshots!.map((e) async {
-            try {
-              await _database.screenshotDao
-                  .insertScreenshot(e.toScreenshotEntity());
-            } catch (_) {}
-          }).toList();
-          print('screenshots: $screenshots');
-        }
-
-        // if (game.similarGames != null) {
-        //   similarGames =
-        //       game.similarGames!.map((e) => e.id.toString()).join(',');
-        //   print('similarGames: $similarGames');
-        // }
-
-        final screnns = await _database.screenshotDao.findScreenshots();
-        print('screens: ${screnns.length}');
-
-        final gameToSave = GameEntity(
-          id: game.id,
-          name: game.name,
-          category: game.category.toString(),
-          status: game.status.toString(),
-          summary: game.summary,
-          cover: game.cover?.id,
-          url: game.url,
-          screenshots: screenshots,
-          similarGames: '',
-        );
-
-        await _database.gameDao.updateGame(gameToSave);
-      } catch (__, _) {}
+      // * Update full game and insert all games from similar_games in database
+      await updateFullGameInDatabase(game);
 
       return Resource.success(game);
     } on DioError catch (_) {
@@ -138,5 +87,59 @@ class RemoteGamesRepositoryImplements extends GamesRepositoryInterface {
     } catch (e, _) {
       return Resource.failure(PinchFailure.serverError());
     }
+  }
+
+  Future<void> insertGamesInDatabase(List<GameLiteModel> gamesLite) async {
+    try {
+      final coversTemp = gamesLite.where((x) => x.cover != null).toList();
+      coversTemp.map((e) async {
+        try {
+          await _database.coverDao.insertCover(e.cover!.toCoverEntity());
+        } catch (_) {}
+        e.cover!.toCoverEntity();
+      }).toList();
+      gamesLite.map((e) async {
+        try {
+          await _database.gameDao.insertGame(e.toGameEntity());
+        } catch (_) {}
+        e.toGameEntity();
+      }).toList();
+    } catch (__, _) {}
+  }
+
+  Future<void> updateFullGameInDatabase(GameModel game) async {
+    try {
+      String screenshots = '';
+      String similarGames = '';
+      // insert screenshots
+      if (game.screenshots != null) {
+        screenshots = game.screenshots!.map((e) => e.id.toString()).join(',');
+        game.screenshots!.map((e) async {
+          try {
+            await _database.screenshotDao
+                .insertScreenshot(e.toScreenshotEntity());
+          } catch (_) {}
+        }).toList();
+      }
+      // insert similar games
+      if (game.similarGames != null) {
+        similarGames = game.similarGames!.map((e) => e.id.toString()).join(',');
+        await insertGamesInDatabase(game.similarGames!);
+      }
+
+      final gameToSave = GameEntity(
+        id: game.id,
+        name: game.name,
+        category: game.category.toString(),
+        status: game.status.toString(),
+        summary: game.summary,
+        cover: game.cover?.id,
+        url: game.url,
+        screenshots: screenshots,
+        similarGames: similarGames,
+      );
+
+      await _database.gameDao.updateGame(gameToSave);
+    } catch (__, _) {}
   }
 }
