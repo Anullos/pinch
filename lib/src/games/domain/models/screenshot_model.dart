@@ -1,3 +1,5 @@
+import '../entities/screenshot_entity.dart';
+
 class ScreenshotModel {
   final int id;
   final String url;
@@ -15,6 +17,11 @@ class ScreenshotModel {
       url: url ?? this.url,
     );
   }
+
+  ScreenshotEntity toScreenshotEntity() => ScreenshotEntity(
+        id: id,
+        url: url,
+      );
 
   @override
   String toString() => 'ScreenshotModel(id: $id, url: $url)';

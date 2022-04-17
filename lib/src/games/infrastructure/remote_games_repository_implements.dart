@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import '../../shared/config/resource.dart';
 import '../../shared/database/database.dart';
 import '../../shared/presentation/utils/const.dart';
+import '../domain/entities/game_entity.dart';
 import '../domain/failures/pinch_failure.dart';
 import '../domain/games_repository_interface.dart';
 import '../domain/models/game_lite_model.dart';
@@ -90,6 +91,46 @@ class RemoteGamesRepositoryImplements extends GamesRepositoryInterface {
       GameModel game = (response.data.map((x) => GameDto.fromMap(x).toDomain()))
           .toList()
           .first;
+
+      // * Insert all games in database
+      try {
+        String screenshots = '';
+        String similarGames = '';
+
+        if (game.screenshots != null) {
+          screenshots = game.screenshots!.map((e) => e.id.toString()).join(',');
+          game.screenshots!.map((e) async {
+            try {
+              await _database.screenshotDao
+                  .insertScreenshot(e.toScreenshotEntity());
+            } catch (_) {}
+          }).toList();
+          print('screenshots: $screenshots');
+        }
+
+        // if (game.similarGames != null) {
+        //   similarGames =
+        //       game.similarGames!.map((e) => e.id.toString()).join(',');
+        //   print('similarGames: $similarGames');
+        // }
+
+        final screnns = await _database.screenshotDao.findScreenshots();
+        print('screens: ${screnns.length}');
+
+        final gameToSave = GameEntity(
+          id: game.id,
+          name: game.name,
+          category: game.category.toString(),
+          status: game.status.toString(),
+          summary: game.summary,
+          cover: game.cover?.id,
+          url: game.url,
+          screenshots: screenshots,
+          similarGames: '',
+        );
+
+        await _database.gameDao.updateGame(gameToSave);
+      } catch (__, _) {}
 
       return Resource.success(game);
     } on DioError catch (_) {
