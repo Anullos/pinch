@@ -18,6 +18,9 @@ jobs:
       - name: Install Dependencies
         run: flutter packages get
 
+      - name: Buidl Runner
+        run: flutter packages pub run build_runner build
+
       - name: Format
         run: flutter format --set-exit-if-changed lib test
 
