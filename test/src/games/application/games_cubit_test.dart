@@ -1,11 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pinch/src/games/application/games_cubit.dart';
-import 'package:pinch/src/games/domain/models/game_lite_model.dart';
-import 'package:pinch/src/games/domain/types/game_category_type.dart';
-import 'package:pinch/src/games/domain/types/game_status_type.dart';
 import 'package:pinch/src/shared/config/resource.dart';
 
+import '../infrastructure/data.dart';
 import '../infrastructure/mock_games_repository_implements.dart';
 
 void main() {
@@ -23,25 +21,6 @@ void main() {
   });
 
   group('getGames', () {
-    final gamesLite = [
-      GameLiteModel(
-        id: 1,
-        name: 'test 1',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 2,
-        name: 'test 2',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-    ];
-
     void set2GameLiteRepository() {
       when(() => mockGamesRepositoryImplements.getGames(10))
           .thenAnswer((_) async {
@@ -65,198 +44,24 @@ void main() {
   });
 
   group('loadMore', () {
-    final gamesLite = [
-      GameLiteModel(
-        id: 1,
-        name: 'test 1',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 2,
-        name: 'test 2',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 3,
-        name: 'test 3',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 4,
-        name: 'test 4',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 5,
-        name: 'test 5',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 6,
-        name: 'test 6',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 7,
-        name: 'test 7',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 8,
-        name: 'test 8',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 9,
-        name: 'test 9',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 10,
-        name: 'test 10',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-    ];
-
-    final gamesLite2 = [
-      GameLiteModel(
-        id: 1,
-        name: 'test 1',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 2,
-        name: 'test 2',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 3,
-        name: 'test 3',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 4,
-        name: 'test 4',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 5,
-        name: 'test 5',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 6,
-        name: 'test 6',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 7,
-        name: 'test 7',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 8,
-        name: 'test 8',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 9,
-        name: 'test 9',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: null,
-      ),
-      GameLiteModel(
-        id: 10,
-        name: 'test 10',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-      GameLiteModel(
-        id: 11,
-        name: 'test 11',
-        summary: 'test',
-        cover: null,
-        category: GameCategoryType.episode(),
-        status: GameStatusType.alpha(),
-      ),
-    ];
-
     void set10GameLiteRepositoryWith10() {
       when(() => mockGamesRepositoryImplements.getGames(10))
           .thenAnswer((_) async {
-        return Resource.success(gamesLite);
+        return Resource.success(gamesLite10);
       });
     }
 
     void set11GameLiteRepositoryWith20() {
       when(() => mockGamesRepositoryImplements.getGames(20))
           .thenAnswer((_) async {
-        return Resource.success(gamesLite2);
+        return Resource.success(gamesLite11);
       });
     }
 
     void set11GameLiteRepositoryWith30() {
       when(() => mockGamesRepositoryImplements.getGames(30))
           .thenAnswer((_) async {
-        return Resource.success(gamesLite2);
+        return Resource.success(gamesLite11);
       });
     }
 
@@ -288,7 +93,7 @@ void main() {
       expect(gamesCubit.state.limit, 20);
       await future;
       expect(gamesCubit.state.page, 2);
-      expect(gamesCubit.state.gamesList, gamesLite2);
+      expect(gamesCubit.state.gamesList, gamesLite11);
       expect(gamesCubit.state.isLoadMoreRunning, false);
     });
 
