@@ -18,7 +18,7 @@ jobs:
       - name: Install Dependencies
         run: flutter packages get
 
-      - name: Buidl Runner
+      - name: Build Runner
         run: flutter packages pub run build_runner build
 
       - name: Format
