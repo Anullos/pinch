@@ -30,16 +30,20 @@ class GameDetailsPage extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
+              // Full screen
               SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    // Header
                     GameDetailsHeader(gameLite: gameLite),
+                    // Body extra info
                     const GameDetailsExtraInfo(),
                   ],
                 ),
               ),
+              // Button to go to page game
               Positioned(
                 left: 0,
                 right: 0,

@@ -31,6 +31,7 @@ class _GamesPageState extends State<GamesPage> {
   void dispose() {
     _controller.removeListener(
         () => _gamesCubit.loadMore(_controller.position.extentAfter));
+    _controller.dispose();
     super.dispose();
   }
 
@@ -38,22 +39,20 @@ class _GamesPageState extends State<GamesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverPersistentHeader(
-                delegate: CustomHeaderDelegate(
-                  height: kToolbarHeight + 60 + 70,
-                  avatarSize: 60,
-                  minAvatarSize: 30,
-                  extraSpace: 70,
-                ),
-                pinned: true,
+        child: CustomScrollView(
+          controller: _controller,
+          slivers: [
+            SliverPersistentHeader(
+              delegate: CustomHeaderDelegate(
+                height: kToolbarHeight + 60 + 70,
+                avatarSize: 60,
+                minAvatarSize: 30,
+                extraSpace: 70,
               ),
-            ];
-          },
-          body: CustomBodyDelegate(controller: _controller),
+              pinned: true,
+            ),
+            const SliverToBoxAdapter(child: CustomBodyDelegate()),
+          ],
         ),
       ),
     );

@@ -6,9 +6,7 @@ import '../../application/games_cubit.dart';
 import 'game_list.dart';
 
 class CustomBodyDelegate extends StatelessWidget {
-  const CustomBodyDelegate({Key? key, required this.controller})
-      : super(key: key);
-  final ScrollController controller;
+  const CustomBodyDelegate({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +15,12 @@ class CustomBodyDelegate extends StatelessWidget {
         await context.read<GamesCubit>().getGames();
       },
       child: SingleChildScrollView(
-        controller: controller,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
+            // List of games
             const GameList(),
+            // Pagination state
             BlocBuilder<GamesCubit, GamesState>(
               builder: (_, stateGames) {
                 return Column(

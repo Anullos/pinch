@@ -19,12 +19,12 @@ class GameDetailsHeader extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Hero(
-            tag: 'game_picture_${gameLite.id}',
-            child: Container(
-              width: 160,
-              height: 220,
-              padding: const EdgeInsets.only(left: 20.0, top: 8.0, right: 8.0),
+          Container(
+            width: 160,
+            height: 220,
+            padding: const EdgeInsets.only(left: 20.0, top: 8.0, right: 8.0),
+            child: Hero(
+              tag: 'game_picture_${gameLite.id}',
               child: (gameLite.cover == null)
                   ? Image.asset(
                       PinchImages.pinchLogo,

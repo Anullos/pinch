@@ -21,8 +21,11 @@ class _GameDetailsExtraInfoState extends State<GameDetailsExtraInfo> {
         builder: (context, state) {
       return state.gamesFailureOrSuccess.map(
         isNone: () => Container(),
-        isLoading: () => const Center(
-          child: CircularProgressIndicator(),
+        isLoading: () => const SizedBox(
+          height: 200,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
         isSuccess: (game) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -37,9 +37,10 @@ package. Although you are free to choose your own packages, at least use the fol
 - Dependency injection (of your choice)
 - [Floor] (https://pub.dev/packages/floor)
 
-#### Notes
+#### Notes by Daniel Aranda Maestro
 
-Need use the generator with 
+Need use the generator database with
+
 ```
 flutter packages pub run build_runner build
 ```

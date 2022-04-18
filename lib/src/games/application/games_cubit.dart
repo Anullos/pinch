@@ -25,19 +25,13 @@ class GamesCubit extends Cubit<GamesState> {
     emit(state.copyWith(gamesList: games, isFirstLoadRunning: false));
   }
 
-  Future<void> update() async {
-    await Future.delayed(const Duration(seconds: 1));
-  }
-
   Future<void> loadMore(double scrollPosition) async {
     if (state.hasNextPage == true &&
         state.isFirstLoadRunning == false &&
         state.isLoadMoreRunning == false &&
         scrollPosition < 300) {
-      int currentPage = state.page + 1;
       int currentLimit = state.limit + 10;
-      emit(state.copyWith(
-          isLoadMoreRunning: true, page: currentPage, limit: currentLimit));
+      emit(state.copyWith(isLoadMoreRunning: true, limit: currentLimit));
       try {
         final result = await gamesRepository.getGames(state.limit);
         List<GameLiteModel> tempGames = [];
@@ -46,15 +40,18 @@ class GamesCubit extends Cubit<GamesState> {
         });
 
         if (tempGames.length > state.gamesList.length) {
+          int currentPage = state.page + 1;
           List<GameLiteModel> currentGames = [];
           currentGames.addAll(tempGames);
           emit(state.copyWith(
-              gamesList: currentGames, isLoadMoreRunning: false));
+              gamesList: currentGames,
+              page: currentPage,
+              isLoadMoreRunning: false));
         } else {
           emit(state.copyWith(hasNextPage: false, isLoadMoreRunning: false));
         }
       } catch (err) {
-        emit(state.copyWith(hasNextPage: false, isLoadMoreRunning: false));
+        emit(state.copyWith(isLoadMoreRunning: false));
       }
     }
   }

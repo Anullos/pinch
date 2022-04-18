@@ -41,7 +41,7 @@ class RemoteGamesRepositoryImplements extends GamesRepositoryInterface {
 
       return Resource.success(gamesLite);
     } on DioError catch (_) {
-      // I dont know error code
+      // I dont know error code of pinch server
       // if (e.response == null || e.response!.statusCode == 403) {
       //   return Resource.failure(PinchFailure.serverError());
       // }
@@ -83,6 +83,7 @@ class RemoteGamesRepositoryImplements extends GamesRepositoryInterface {
 
       return Resource.success(game);
     } on DioError catch (_) {
+      // I dont know error code of pinch server
       return Resource.failure(PinchFailure.serverError());
     } catch (e, _) {
       return Resource.failure(PinchFailure.serverError());

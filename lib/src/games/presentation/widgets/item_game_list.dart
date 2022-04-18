@@ -42,17 +42,14 @@ class ItemGameList extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              (game.cover == null)
-                  ? Hero(
-                      tag: 'game_picture_${game.id}',
-                      child: Image.asset(
+              Hero(
+                tag: 'game_picture_${game.id}',
+                child: (game.cover == null)
+                    ? Image.asset(
                         PinchImages.pinchLogo,
-                      ),
-                    )
-                  : Hero(
-                      tag: 'game_picture_${game.id}',
-                      child: CustomImagenetwork(url: game.cover!.url),
-                    ),
+                      )
+                    : CustomImagenetwork(url: game.cover!.url),
+              ),
               Container(
                 height: 250,
                 decoration: BoxDecoration(
