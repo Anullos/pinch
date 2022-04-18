@@ -51,7 +51,9 @@ class _GamesPageState extends State<GamesPage> {
               ),
               pinned: true,
             ),
-            const SliverToBoxAdapter(child: CustomBodyDelegate()),
+            const SliverToBoxAdapter(
+              child: CustomBodyDelegate(),
+            ),
           ],
         ),
       ),

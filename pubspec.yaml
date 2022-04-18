@@ -30,6 +30,7 @@ dev_dependencies:
   build_runner: ^2.1.2
   #plus
   mocktail: ^0.3.0
+  bloc_test: ^9.0.3
   integration_test:
     sdk: flutter
 

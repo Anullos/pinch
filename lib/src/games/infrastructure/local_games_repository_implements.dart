@@ -36,8 +36,8 @@ class LocalGamesRepositoryImplements extends GamesRepositoryInterface {
       final game = await _database.gameDao.findGameById(gameId);
 
       if (game != null) {
-        final result =
-            await game.toGame(_database.coverDao, _database.screenshotDao, _database.gameDao);
+        final result = await game.toGame(
+            _database.coverDao, _database.screenshotDao, _database.gameDao);
 
         return Resource.success(result);
       } else {

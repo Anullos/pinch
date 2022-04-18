@@ -9,7 +9,7 @@ import '../../games/domain/entities/cover_entity.dart';
 import '../../games/domain/entities/game_entity.dart';
 import '../../games/domain/entities/screenshot_entity.dart';
 
-part 'database.g.dart'; 
+part 'database.g.dart';
 
 @Database(version: 1, entities: [GameEntity, CoverEntity, ScreenshotEntity])
 abstract class AppDatabase extends FloorDatabase {
