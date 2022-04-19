@@ -35,7 +35,7 @@ Future<void> main() async {
   );
   final database = await $FloorAppDatabase
       .databaseBuilder(
-        'pinch_database2.db',
+        'pinch_database_dev.db',
       )
       .addCallback(callback)
       .build();

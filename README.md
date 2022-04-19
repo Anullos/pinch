@@ -37,10 +37,24 @@ package. Although you are free to choose your own packages, at least use the fol
 - Dependency injection (of your choice)
 - [Floor] (https://pub.dev/packages/floor)
 
-#### Notes by Daniel Aranda Maestro
+</br>
 
-Need use the generator database with
+## Notes by Daniel Aranda Maestro
+
+Important: Need use the generator database to start with
 
 ```
 flutter packages pub run build_runner build
+```
+
+To run unit test
+
+```
+flutter test
+```
+
+To run integration test
+
+```
+flutter test integration_test/app_test.dart
 ```
